@@ -1,6 +1,6 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using System.Data;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,17 +30,17 @@ public class EnemyAI : MonoBehaviour
         if (distance <= LookRadius && CanSeePlayer())
         {
             patrolAI.StopPatrolling();
-            LookTarget(); // Поворот, пока идет к дистанции
+            LookTarget(); 
 
             if (!isShooting && distance > shooter.minDistance)
             {
-                agent.SetDestination(target.position); // Идем к игроку
+                agent.SetDestination(target.position); 
                 
             }
             else
             {
-                agent.SetDestination(transform.position); // Останавливаемся
-                shooter.EngageTarget(); // Стреляем
+                agent.SetDestination(transform.position); 
+                shooter.EngageTarget(); 
                 isShooting = true;
                 
             }
@@ -49,20 +49,7 @@ public class EnemyAI : MonoBehaviour
         {
             patrolAI.StartPatrolling();
         }
-        //    patrolAI.StopPatrolling(); // Отключаем патрулирование
-        //    //agent.SetDestination(target.position); // Преследуем игрока
-        //    shooter.EngageTarget();
-
-        //    if (distance <= agent.stoppingDistance)
-        //    {
-        //        LookTarget();
-        //    }
-        //}
-        //else
-        //{
-        //    // Если игрока не видно, включаем патрулирование
-        //    patrolAI.StartPatrolling();
-        //}
+        
     }
 
     private void LookTarget()

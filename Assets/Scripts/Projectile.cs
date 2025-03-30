@@ -4,35 +4,33 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float damage = 10f; // Урон от пули
-    private bool hasCollided = false; // Флаг, чтобы избежать мгновенного уничтожения
+    public float damage = 10f;
+    private bool hasCollided = false;
 
     private void Start()
     {
-        // Даем пуле кадр, чтобы выйти из коллайдера бота
         Invoke("EnableCollision", 0.05f);
     }
+
     private void EnableCollision()
     {
-        hasCollided = true; // Разрешаем столкновения после небольшой задержки
+        hasCollided = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!hasCollided) return;
-        if (other.CompareTag("Player")) // Убедись, что у игрока тег "Player"
+
+        Character character = other.GetComponent<Character>();
+        if (character != null)
         {
-            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
-            {
-                playerHealth.TakeDamage(damage); // Наносим урон
-                Debug.Log("Игрок получил урон: " + damage);
-            }
-            Destroy(gameObject); // Уничтожаем пулю
+            character.TakeDamage(damage);
+            Debug.Log($"{other.name} получил урон: {damage}");
+            Destroy(gameObject);
         }
-        else if (other.gameObject.layer != LayerMask.NameToLayer("Enemy")) // Не исчезает при столкновении с ботом
+        else if (other.gameObject.layer != LayerMask.NameToLayer("Enemy") && !other.CompareTag("Player"))
         {
-            Destroy(gameObject); // Уничтожаем пулю при попадании в любой другой объект
+            Destroy(gameObject); 
         }
     }
 }
