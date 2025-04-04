@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerPickupHandler : MonoBehaviour
 {
     private WeaponManager weaponManager;
@@ -11,8 +12,6 @@ public class PlayerPickupHandler : MonoBehaviour
     {
         weaponManager = GetComponent<WeaponManager>();
         character = GetComponent<Character>();
-        if (weaponManager == null) Debug.LogError("WeaponManager не найден на игроке!");
-        if (character == null) Debug.LogError("Character не найден на игроке!");
     }
 
     public bool AddAmmo(int amount)
@@ -29,7 +28,7 @@ public class PlayerPickupHandler : MonoBehaviour
     {
         if (character != null)
         {
-            character.AddHealth(amount); 
+            character.AddHealth(amount);
             return true;
         }
         return false;

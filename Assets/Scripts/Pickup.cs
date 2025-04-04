@@ -4,9 +4,9 @@ using UnityEngine;
 
 public abstract class Pickup : MonoBehaviour
 {
-    [SerializeField] private float respawnTime = 15f; // Время респавна
-    protected Vector3 initialPosition; // Начальная позиция
-    protected Quaternion initialRotation; // Начальная ориентация
+    [SerializeField] private float respawnTime = 15f; 
+    protected Vector3 initialPosition; 
+    protected Quaternion initialRotation; 
     private float timer;
     private bool isPickedUp = false;
 
@@ -56,7 +56,5 @@ public abstract class Pickup : MonoBehaviour
         isPickedUp = false;
         Debug.Log($"{GetType().Name} возродился в: {initialPosition}");
     }
-
-    // Абстрактный метод для эффекта пикапа
     protected abstract bool ApplyEffect(PlayerPickupHandler handler);
 }

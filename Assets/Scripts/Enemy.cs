@@ -30,6 +30,7 @@ public class Enemy : Character
         if (weaponManager == null) Debug.LogError("WeaponManager не найден на враге!");
     }
 
+   
     private void Update()
     {
         if (target == null) return;
@@ -60,6 +61,12 @@ public class Enemy : Character
         {
             patrolAI.StartPatrolling();
             isShooting = false;
+
+            
+            if (!agent.hasPath && !patrolAI.IsWaiting)
+            {
+                patrolAI.MoveToNextPatrolPoint();
+            }
         }
     }
 

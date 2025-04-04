@@ -2450,7 +2450,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 747770b5060358140a5f8b52ce3a13a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolRadius: 35
+  patrolRadius: 20
+  waitTime: 1
 --- !u!114 &1852685419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2477,8 +2478,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  lookRadius: 10
-  minDistance: 5
+  lookRadius: 15
+  minDistance: 10
   target: {fileID: 0}
   weaponManager: {fileID: 1852685421}
 --- !u!114 &1852685421

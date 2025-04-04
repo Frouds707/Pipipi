@@ -39,15 +39,15 @@ public class Player : Character
             Debug.Log("Переключение курсора: " + (Cursor.visible ? "Виден" : "Скрыт"));
         }
 
-        // Переключение оружия
+        
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            weaponManager.SwitchWeapon(0); // Пистолет
+            weaponManager.SwitchWeapon(0); 
             Debug.Log("Переключено на пистолет");
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            weaponManager.SwitchWeapon(1); // Ракетница
+            weaponManager.SwitchWeapon(1); 
             Debug.Log("Переключено на ракетницу");
         }
     }

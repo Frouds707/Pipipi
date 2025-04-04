@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+
+
 public class WeaponManager : MonoBehaviour
 {
     [SerializeField] private IWeapon[] weapons;
@@ -44,7 +46,7 @@ public class WeaponManager : MonoBehaviour
         {
             return rocket.GetAmmo();
         }
-        return -1; 
+        return -1;
     }
 
     public void AddAmmo(int amount)
@@ -55,12 +57,16 @@ public class WeaponManager : MonoBehaviour
         }
     }
 
-
     private GameObject GetProjectilePrefab(int index)
     {
         if (weapons[index] is Pistol) return Resources.Load<GameObject>("BulletPrefab");
         if (weapons[index] is RocketLauncher) return Resources.Load<GameObject>("RocketPrefab");
         return null;
+    }
+
+    public int GetCurrentWeaponIndex()
+    {
+        return currentWeaponIndex;
     }
 }
 
