@@ -9,12 +9,13 @@ public abstract class Character : MonoBehaviour
     [SerializeField] protected float maxHealth = 100f;
     protected float currentHealth;
 
+    public event System.Action OnDeath;
+
     protected virtual void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         currentHealth = maxHealth;
         weapon = GetComponent<IWeapon>();
-        if (weapon == null) Debug.LogWarning($"{name}: Оружие не найдено!");
     }
 
     public float GetCurrentHealth()
@@ -27,6 +28,11 @@ public abstract class Character : MonoBehaviour
         return maxHealth;
     }
 
+    public bool IsAlive()
+    {
+        return currentHealth > 0;
+    }
+
     public void AddHealth(float amount)
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
@@ -37,14 +43,16 @@ public abstract class Character : MonoBehaviour
     {
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
-        Debug.Log($"{name}: Здоровье: {currentHealth}");
-        if (currentHealth <= 0) Die();
+        Debug.Log($"{name}: Получен урон {damage}, текущее здоровье: {currentHealth}");
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
     }
 
     protected virtual void Die()
     {
-        Debug.Log($"{name} умер!");
-        Destroy(gameObject);
+        OnDeath?.Invoke();
     }
 
     protected void LookTarget(Transform target)
@@ -53,6 +61,7 @@ public abstract class Character : MonoBehaviour
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
     }
+
     protected NavMeshAgent agent;
     [SerializeField] protected IWeapon weapon;
 }

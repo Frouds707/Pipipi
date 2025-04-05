@@ -11,8 +11,6 @@ public abstract class Weapon : MonoBehaviour, IWeapon
     public virtual void Setup(Transform point, GameObject prefab)
     {
         firePoint = point;
-        if (data == null) Debug.LogError($"{name}: WeaponData не задан!");
-        if (firePoint == null) Debug.LogError($"{name}: Fire Point не задан!");
     }
 
     public bool CanShoot() => Time.time >= nextFireTime;

@@ -17,7 +17,7 @@ public class Rocket : MonoBehaviour
     private void Start()
     {
         Invoke("EnableCollision", 0.05f);
-        if (!GetComponent<Collider>().isTrigger) Debug.LogError("Ракета: Collider не триггер!");
+
     }
 
     private void EnableCollision()
@@ -28,8 +28,6 @@ public class Rocket : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!hasCollided) return;
-
-        Debug.Log($"Ракета столкнулась с: {other.name} (тег: {other.tag}, слой: {LayerMask.LayerToName(other.gameObject.layer)})");
         Explode();
         Destroy(gameObject);
     }

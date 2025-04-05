@@ -41,19 +41,19 @@ public class PatrolAI : MonoBehaviour
             {
                 isWaiting = false;
                 waitTimer = 0f;
-                Debug.Log($"PatrolAI: Ожидание на точке {patrolPoint} завершено");
+                
             }
             return;
         }
 
         float distanceToPoint = Vector3.Distance(transform.position, patrolPoint);
-        Debug.Log($"PatrolAI: Физическое расстояние до точки = {distanceToPoint}, hasPath = {agent.hasPath}, pathPending = {agent.pathPending}, remainingDistance = {agent.remainingDistance}");
+        
 
         if (agent.hasPath && !agent.pathPending && distanceToPoint <= 0.5f)
         {
             isWaiting = true;
             agent.ResetPath();
-            Debug.Log($"PatrolAI: Дошел до точки {patrolPoint}, ждем {waitTime} секунд");
+           
         }
     }
 
@@ -79,23 +79,16 @@ public class PatrolAI : MonoBehaviour
                     patrolPoint = newPoint;
                     validPointFound = true;
                     agent.SetDestination(patrolPoint);
-                    Debug.Log($"PatrolAI: Новая точка патрулирования: {patrolPoint}");
+                   
                     break;
                 }
-                else
-                {
-                    Debug.LogWarning($"PatrolAI: Точка {newPoint} недостижима, ищем другую...");
-                }
+               
             }
-            else
-            {
-                Debug.LogWarning($"PatrolAI: Точка {randomDirection} не на NavMesh, ищем другую...");
-            }
+            
         }
 
         if (!validPointFound)
         {
-            Debug.LogWarning("PatrolAI: Не удалось найти достижимую точку для патрулирования!");
             isPatrolPointSet = false;
             return;
         }

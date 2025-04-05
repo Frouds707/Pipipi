@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private float xRotation = 0f;
 
+    private bool isMovementEnabled = true;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviour
 
     public void Move(Vector3 input)
     {
+        if (!isMovementEnabled) return;
+
         Vector3 movement = input.normalized * moveSpeed;
         Vector3 velocity = transform.TransformDirection(movement);
         velocity.y = rb.velocity.y;
@@ -30,6 +34,8 @@ public class PlayerController : MonoBehaviour
 
     public void Rotate(Vector2 mouseInput)
     {
+        if (!isMovementEnabled) return;
+
         float mouseX = mouseInput.x * mouseSensitivity * Time.deltaTime;
         float mouseY = mouseInput.y * mouseSensitivity * Time.deltaTime;
 
@@ -43,5 +49,16 @@ public class PlayerController : MonoBehaviour
     public Vector3 GetLookDirection()
     {
         return playerCamera.transform.forward;
+    }
+
+    public void EnableMovement()
+    {
+        isMovementEnabled = true;
+    }
+
+    public void DisableMovement()
+    {
+        isMovementEnabled = false;
+        rb.velocity = Vector3.zero;
     }
 }

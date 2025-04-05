@@ -11,11 +11,11 @@ public class WeaponManager : MonoBehaviour
     [SerializeField] private Transform firePoint;
     [SerializeField] private UnityEvent onWeaponSwitched;
     private int currentWeaponIndex = 0;
+    private bool isWeaponEnabled = true;
 
     private void Awake()
     {
         weapons = GetComponents<IWeapon>();
-        if (weapons.Length == 0) Debug.LogError("Нет оружий на объекте!");
         for (int i = 0; i < weapons.Length; i++)
         {
             weapons[i].Setup(firePoint, GetProjectilePrefab(i));
@@ -24,6 +24,8 @@ public class WeaponManager : MonoBehaviour
 
     public void Shoot(Vector3 direction)
     {
+        if (!isWeaponEnabled) return;
+
         if (weapons[currentWeaponIndex] != null && weapons[currentWeaponIndex].CanShoot())
         {
             weapons[currentWeaponIndex].Shoot(direction);
@@ -36,7 +38,6 @@ public class WeaponManager : MonoBehaviour
         {
             currentWeaponIndex = index;
             onWeaponSwitched?.Invoke();
-            Debug.Log($"Выбрано оружие: {weapons[currentWeaponIndex].GetType().Name}");
         }
     }
 
@@ -68,5 +69,14 @@ public class WeaponManager : MonoBehaviour
     {
         return currentWeaponIndex;
     }
-}
 
+    public void EnableWeapon()
+    {
+        isWeaponEnabled = true;
+    }
+
+    public void DisableWeapon()
+    {
+        isWeaponEnabled = false;
+    }
+}
