@@ -3,19 +3,21 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using UnityEngine;
 
+
+
 public class RocketLauncher : Weapon
 {
-    [SerializeField] private int maxAmmo = 20; 
+    [SerializeField] private int maxAmmo = 20;
     private int currentAmmo = 0;
 
     private void Awake()
     {
-        currentAmmo = 0; 
+        currentAmmo = 0;
     }
 
     public override void Shoot(Vector3 direction)
     {
-        if (!CanShoot() || currentAmmo <= 0) return; 
+        if (!CanShoot() || currentAmmo <= 0) return;
 
         GameObject projectile = Instantiate(data.projectilePrefab, firePoint.position, Quaternion.identity);
         Rigidbody rb = projectile.GetComponent<Rigidbody>();
@@ -24,12 +26,12 @@ public class RocketLauncher : Weapon
         Rocket rocket = projectile.GetComponent<Rocket>();
         if (rocket != null) rocket.SetExplosion(data.maxExplosionDamage, data.explosionRadius);
 
-        currentAmmo--; 
+        currentAmmo--;
         Debug.Log($"Осталось ракет: {currentAmmo}");
         UpdateFireTime();
     }
 
-    
+
     public int GetAmmo()
     {
         return currentAmmo;

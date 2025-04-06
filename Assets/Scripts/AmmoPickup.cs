@@ -10,16 +10,19 @@ public class AmmoPickup : Pickup
 
     protected override bool ApplyEffect(PlayerPickupHandler handler)
     {
-        bool success = handler.AddAmmo(ammoAmount);
-        if (success)
+        WeaponManager weaponManager = handler.GetComponent<WeaponManager>();
+        if (weaponManager != null)
         {
-            
-            WeaponManager weaponManager = handler.GetComponent<WeaponManager>();
-            if (weaponManager != null)
+            // Ищем RocketLauncher среди всех оружий
+            foreach (var weapon in weaponManager.GetWeapons())
             {
-                weaponManager.SwitchWeapon(weaponManager.GetCurrentWeaponIndex());  
+                if (weapon is RocketLauncher rocket)
+                {
+                    rocket.AddAmmo(ammoAmount);
+                    return true; // Успешно добавили патроны
+                }
             }
         }
-        return success;
+        return false; // Не удалось найти RocketLauncher
     }
 }
