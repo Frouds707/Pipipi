@@ -27,7 +27,6 @@ public class RocketLauncher : Weapon
         if (rocket != null) rocket.SetExplosion(data.maxExplosionDamage, data.explosionRadius);
 
         currentAmmo--;
-        Debug.Log($"Осталось ракет: {currentAmmo}");
         UpdateFireTime();
     }
 
@@ -42,11 +41,7 @@ public class RocketLauncher : Weapon
         if (currentAmmo < maxAmmo)
         {
             currentAmmo = Mathf.Min(currentAmmo + amount, maxAmmo);
-            Debug.Log($"Добавлено патронов: {amount}, теперь: {currentAmmo}");
         }
-        else
-        {
-            Debug.Log("Патроны для ракетницы максимум!");
-        }
+
     }
 }

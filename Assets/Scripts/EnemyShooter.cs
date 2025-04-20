@@ -17,8 +17,6 @@ public class EnemyShooter : MonoBehaviour
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        if (projectilePrefab == null) Debug.LogError("Projectile Prefab не задан!");
-        if (firePoint == null) Debug.LogError("Fire Point не задан!");
     }
 
     public void EngageTarget()
@@ -30,7 +28,6 @@ public class EnemyShooter : MonoBehaviour
         {
             Shoot();
             nextFireTime = Time.time + 1f / fireRate;
-            Debug.Log("Выстрел!");
         }
     }
 

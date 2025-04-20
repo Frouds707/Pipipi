@@ -3,21 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
+
 public class PatrolAI : MonoBehaviour
 {
     private NavMeshAgent agent;
     public float patrolRadius = 20f;
     private Vector3 patrolPoint;
     private bool isPatrolPointSet = false;
-    private bool isWaiting = false; 
-    public float waitTime = 1f; 
+    private bool isWaiting = false;
+    public float waitTime = 1f;
     private float waitTimer = 0f;
 
-   
-    public bool IsWaiting
-    {
-        get { return isWaiting; }
-    }
+    public bool IsWaiting => isWaiting;
 
     private void Start()
     {
@@ -41,19 +39,17 @@ public class PatrolAI : MonoBehaviour
             {
                 isWaiting = false;
                 waitTimer = 0f;
-                
+                SetNewPatrolPoint();
             }
             return;
         }
 
         float distanceToPoint = Vector3.Distance(transform.position, patrolPoint);
-        
 
         if (agent.hasPath && !agent.pathPending && distanceToPoint <= 0.5f)
         {
             isWaiting = true;
             agent.ResetPath();
-           
         }
     }
 
@@ -68,23 +64,22 @@ public class PatrolAI : MonoBehaviour
             Vector3 randomDirection = Random.insideUnitSphere * patrolRadius;
             randomDirection += transform.position;
 
-            NavMeshHit hit;
-            if (NavMesh.SamplePosition(randomDirection, out hit, patrolRadius, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, patrolRadius, NavMesh.AllAreas))
             {
                 newPoint = hit.position;
 
                 NavMeshPath path = new NavMeshPath();
-                if (agent.CalculatePath(newPoint, path) && path.status == NavMeshPathStatus.PathComplete)
+                bool hasValidPath = agent.CalculatePath(newPoint, path) && path.status == NavMeshPathStatus.PathComplete;
+                bool hasLineOfSight = HasClearPath(transform.position, newPoint);
+
+                if (hasValidPath && hasLineOfSight)
                 {
                     patrolPoint = newPoint;
                     validPointFound = true;
                     agent.SetDestination(patrolPoint);
-                   
                     break;
                 }
-               
             }
-            
         }
 
         if (!validPointFound)
@@ -94,6 +89,18 @@ public class PatrolAI : MonoBehaviour
         }
 
         isPatrolPointSet = true;
+    }
+
+    private bool HasClearPath(Vector3 start, Vector3 end)
+    {
+        if (NavMesh.Raycast(start, end, out NavMeshHit hit, NavMesh.AllAreas))
+        {
+            Debug.DrawLine(start, hit.position, Color.red, 1f);
+            return false;
+        }
+
+        Debug.DrawLine(start, end, Color.green, 1f);
+        return true;
     }
 
     public void StopPatrolling()

@@ -36,14 +36,12 @@ public abstract class Character : MonoBehaviour
     public void AddHealth(float amount)
     {
         currentHealth = Mathf.Min(currentHealth + amount, maxHealth);
-        Debug.Log($"{name}: Здоровье увеличено до {currentHealth}");
     }
 
     public virtual void TakeDamage(float damage)
     {
         currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
-        Debug.Log($"{name}: Получен урон {damage}, текущее здоровье: {currentHealth}");
         if (currentHealth <= 0)
         {
             Die();

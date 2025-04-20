@@ -25,7 +25,6 @@ public class Projectile : MonoBehaviour
         if (character != null)
         {
             character.TakeDamage(damage);
-            Debug.Log($"{other.name} получил урон: {damage}");
             Destroy(gameObject);
         }
         else if (other.gameObject.layer != LayerMask.NameToLayer("Enemy") && !other.CompareTag("Player"))

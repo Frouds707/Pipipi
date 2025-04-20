@@ -13,16 +13,15 @@ public class AmmoPickup : Pickup
         WeaponManager weaponManager = handler.GetComponent<WeaponManager>();
         if (weaponManager != null)
         {
-            // Ищем RocketLauncher среди всех оружий
             foreach (var weapon in weaponManager.GetWeapons())
             {
                 if (weapon is RocketLauncher rocket)
                 {
                     rocket.AddAmmo(ammoAmount);
-                    return true; // Успешно добавили патроны
+                    return true;
                 }
             }
         }
-        return false; // Не удалось найти RocketLauncher
+        return false;
     }
 }

@@ -80,9 +80,13 @@ public class WeaponManager : MonoBehaviour
         isWeaponEnabled = false;
     }
 
-    // Новый метод для получения всех оружий
     public IWeapon[] GetWeapons()
     {
         return weapons;
+    }
+
+    public void AddWeaponSwitchedListener(UnityAction listener)
+    {
+        onWeaponSwitched.AddListener(listener);
     }
 }

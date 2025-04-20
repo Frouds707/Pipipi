@@ -35,7 +35,6 @@ public class Rocket : MonoBehaviour
     private void Explode()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
-        Debug.Log($"Взрыв: найдено объектов в радиусе {explosionRadius}: {hitColliders.Length}");
         foreach (Collider hit in hitColliders)
         {
             Character character = hit.GetComponent<Character>();
@@ -44,7 +43,6 @@ public class Rocket : MonoBehaviour
                 float distance = Vector3.Distance(transform.position, hit.transform.position);
                 float damage = CalculateDamage(distance);
                 character.TakeDamage(damage);
-                Debug.Log($"{hit.name} получил урон от взрыва: {damage} (расстояние: {distance})");
             }
         }
     }
